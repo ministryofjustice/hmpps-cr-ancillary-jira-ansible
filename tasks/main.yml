@@ -1,2 +1,7 @@
 ---
 # tasks file for hmpps-cr-ancillary-jira-ansible
+
+- include: 01_packages.yml
+- include: 02_users.yml
+- include: 03_jira_efs.yml
+#- include: 04_jira_db.yml

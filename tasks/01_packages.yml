@@ -1,0 +1,15 @@
+---
+- name: Install required packages
+  become: yes
+  yum:
+    name: "{{ packages }}"
+  vars:
+    packages:
+    - unzip
+    - git
+    - jq
+    - tree
+    - amazon-efs-utils
+    - awslogs
+    - gcc
+    - postgresql
