@@ -18,7 +18,7 @@
     login_password: "{{ jira_db_master_password }}"
     state: present
     db: "{{ jira_db_name }}"
-    name: "{{ db_user }}"
+    name: "{{ jira_db_user }}"
     password: "{{ db_password }}"
   become: yes
   become_user: "{{ jira_db_master_username }}"
@@ -30,7 +30,7 @@
     login_password: "{{ jira_db_master_password }}"
     type: database
     database: "{{ jira_db_name }}"
-    roles: "{{ db_user }}"
+    roles: "{{ jira_db_user }}"
     grant_option: no
     privs: all
   become: yes
@@ -42,7 +42,7 @@
     contype: host
     databases: all
     method: md5
-    users: "{{ db_user }}"
+    users: "{{ jira_db_user }}"
     create: true
   become: yes
   become_user: "{{ jira_db_master_username }}"
