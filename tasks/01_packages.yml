@@ -15,3 +15,5 @@
     - awslogs
     - gcc
     - postgresql
+    - python2-pip
+    - python-psycopg2
