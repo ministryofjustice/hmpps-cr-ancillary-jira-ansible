@@ -19,7 +19,7 @@
     state: present
     db: "{{ jira_db_name }}"
     name: "{{ jira_db_user }}"
-    password: "{{ db_password }}"
+    password: "{{ jira_db_user_password }}"
   become: yes
   become_user: "{{ jira_db_master_username }}"
 
