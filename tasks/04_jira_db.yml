@@ -1,6 +1,11 @@
 ---
 # 04_jira_db.yml
 
+- name: Make sure psycopg2 is installed
+  pip:
+    name: psycopg2
+    state: present
+
 - name: Create JIRA DB
   postgresql_db:
     login_host: "{{ jira_db_host }}"
