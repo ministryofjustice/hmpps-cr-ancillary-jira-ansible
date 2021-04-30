@@ -1,2 +1,14 @@
 ---
 # defaults file for hmpps-cr-ancillary-jira-ansible
+
+---
+# defaults file for jira-install
+jira_group: jira
+jira_user: jira
+jira_gid: 2001
+jira_uid: 2001
+jira_artefact_bucket: "tf-eu-west-2-hmpps-eng-dev-artefacts-s3bucket"
+jira_user_home_dir: "/home/jira"
+jira_home: "/var/jira"
+jira_db_name: "jira"
+jira_db_grants: "SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX"
