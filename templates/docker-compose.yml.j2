@@ -1,0 +1,19 @@
+---
+services:
+  jira:
+    ports:
+      - 8080:8080
+    container_name: jira123
+    image: atlassian/jira-servicemanagement
+    restart: always
+    environment:
+      CLUSTERED: false
+      ATL_JDBC_URL: {{ jira_db_host }}
+      ATL_JDBC_USER: jira
+      ATL_DB_DRIVER: org.postgresql.Driver
+      ATL_DB_TYPE: postgresaurora96
+      ATL_DB_SCHEMA_NAME: public
+      ATL_JDBC_PASSWORD: {{ jira_db_user_password }}
+    volumes:
+      - {{ jira_home }}{{ shared_home_volume_root_dir}}:{{ sharedhome_path }}
+      - {{ jira_home }}{{ shared_home_volume_root_dir}}:{{ jira_config_path}}
