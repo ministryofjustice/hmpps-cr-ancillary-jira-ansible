@@ -8,7 +8,7 @@ services:
     restart: always
     environment:
       CLUSTERED: "false"
-      ATL_JDBC_URL: {{ jira_db_host }}
+      ATL_JDBC_URL: "{{ jira_db_host }}"
       ATL_JDBC_USER: "jira"
       ATL_DB_DRIVER: "org.postgresql.Driver"
       ATL_DB_TYPE: "postgresaurora96"
