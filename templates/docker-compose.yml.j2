@@ -13,8 +13,8 @@ services:
       ATL_DB_DRIVER: "org.postgresql.Driver"
       ATL_DB_TYPE: "postgresaurora96"
       ATL_DB_SCHEMA_NAME: "public"
-      ATL_JDBC_PASSWORD: {{ jira_db_user_password }}
-      ATL_PROXY_NAME: {{ alb_fqdn }}
+      ATL_JDBC_PASSWORD: "{{ jira_db_user_password }}"
+      ATL_PROXY_NAME: "{{ alb_fqdn }}"
       ATL_PROXY_PORT: "443"
       ATL_TOMCAT_SCHEME: "https"
       ATL_TOMCAT_SECURE: "true"
