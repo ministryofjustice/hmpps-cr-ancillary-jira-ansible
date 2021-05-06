@@ -28,8 +28,8 @@
     state: mounted
   register: efs_mounted
 
-  - name: output debug
-    debug: var=efs_mounted
+- name: output debug
+  debug: var=efs_mounted
 
 #- name: Create JIRA Shared Home directory
 #  block:
