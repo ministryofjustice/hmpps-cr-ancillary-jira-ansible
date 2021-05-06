@@ -26,6 +26,31 @@
     fstype: efs
     opts: tls
     state: mounted
+  register: efs_mounted
+
+  - name: output debug
+    debug: var=efs_mounted
+
+#- name: Create JIRA Shared Home directory
+#  block:
+#    - name: Create JIRA Shared Home directory
+#    become: yes
+#    file:
+#      path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+#      state: directory
+#      owner: "{{ jira_user }}"
+#      group: "{{ jira_group }}"
+#
+#    - name: Update JIRA Shared Home directory permissions
+#    become: yes
+#    file:
+#      path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+#      owner: "{{ jira_user }}"
+#      group: "{{ jira_group }}"
+#      mode: 0755
+#      recurse: yes
+#
+#  when: efs_mounted.
 
 - name: Create Docker-compose file
   template:
