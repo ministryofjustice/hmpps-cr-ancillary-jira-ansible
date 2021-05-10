@@ -35,7 +35,7 @@
       JVM_MAXIMUM_MEMORY: "3072m"
       JVM_RESERVED_CODE_CACHE_SIZE: "1024m"
     volumes:
-      - { { jira_home } }{ { shared_home_volume_root_dir } }:{{ sharedhome_path }}
+      - "{{ jira_home }}{{ shared_home_volume_root_dir }}:{{ sharedhome_path }}"
 
 #- name: Update dbconfig.xml file
 #  template:
