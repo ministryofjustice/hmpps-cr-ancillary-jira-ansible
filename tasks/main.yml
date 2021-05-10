@@ -5,4 +5,4 @@
 - include: 02_users.yml
 - include: 03_jira_efs.yml
 - include: 04_jira_db.yml
-#- include: 05_jira_config.yml
+- include: 05_jira_container.yml

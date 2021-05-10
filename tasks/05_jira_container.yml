@@ -1,0 +1,54 @@
+---
+# 05_jira_container.yml
+
+
+## For quick testing and restarting
+- name: Create Docker-compose file
+  template:
+    src: "docker-compose.yml.j2"
+    dest: "/root/docker-compose.yml"
+    owner: "root"
+    group: "root"
+    mode: 0744
+
+- name: Start Jira Service Management container
+  docker_container:
+    name: jira
+    image: atlassian/jira-servicemanagement
+    state: started
+    restart: yes
+    ports:
+      - 8080:8080
+    env:
+      CLUSTERED: "false"
+      ATL_JDBC_URL: "{{ jira_db_host }}"
+      ATL_JDBC_USER: "jira"
+      ATL_DB_DRIVER: "org.postgresql.Driver"
+      ATL_DB_TYPE: "postgresaurora96"
+      ATL_DB_SCHEMA_NAME: "public"
+      ATL_JDBC_PASSWORD: "{{ jira_db_user_password }}"
+      ATL_PROXY_NAME: "{{ alb_fqdn }}"
+      ATL_PROXY_PORT: "443"
+      ATL_TOMCAT_SCHEME: "https"
+      ATL_TOMCAT_SECURE: "true"
+      JVM_MINIMUM_MEMORY: "1536m"
+      JVM_MAXIMUM_MEMORY: "3072m"
+      JVM_RESERVED_CODE_CACHE_SIZE: "1024m"
+    volumes:
+      - { { jira_home } }{ { shared_home_volume_root_dir } }:{{ sharedhome_path }}
+
+#- name: Update dbconfig.xml file
+#  template:
+#    src: "dbconfig.{{ mysql_connector_version }}.xml.j2"
+#    dest: "{{ jira_home }}/dbconfig.xml"
+#    owner: "{{ jira_user }}"
+#    group: "{{ jira_group }}"
+#    mode: 0644
+#
+#- name: Apply JIRA server.xml template
+#  template:
+#    src: "server-{{ jira_version }}.xml.j2"
+#    dest: "{{ jira_user_home_dir }}/{{ jira_filename }}-{{ jira_version }}-standalone/conf/server.xml"
+#    owner: "{{ jira_user }}"
+#    group: "{{ jira_group }}"
+#    mode: 0755

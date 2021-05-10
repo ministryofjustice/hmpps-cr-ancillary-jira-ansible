@@ -50,14 +50,6 @@
         mode: 0755
   when: not efs_mounted.failed
 
-- name: Create Docker-compose file
-  template:
-    src: "docker-compose.yml.j2"
-    dest: "/root/docker-compose.yml"
-    owner: "root"
-    group: "root"
-    mode: 0744
-
 # Check EFS for AWS Backup directory
 # Moves files into place
 # Remove AWS Backup directory
