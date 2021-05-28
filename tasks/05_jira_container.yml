@@ -3,7 +3,7 @@
 - name: Create jira-config.properties file
   template:
     src: "jira-config.properties.j2"
-    dest: ""{{ jira_home }}{{ shared_home_volume_root_dir}}/jira-config.properties"
+    dest: "{{ jira_home }}{{ shared_home_volume_root_dir}}/jira-config.properties"
     owner: "{{ jira_user }}"
     group: "{{ jira_group }}"
     mode: 0644
