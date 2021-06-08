@@ -1,5 +1,10 @@
 ---
 # 05_jira_container.yml
+- name: ecs-stopped
+  service:
+    name: ecs
+    state: stopped
+
 - name: Create jira-config.properties file
   template:
     src: "jira-config.properties.j2"

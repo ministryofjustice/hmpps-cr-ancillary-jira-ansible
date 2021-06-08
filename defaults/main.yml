@@ -1,5 +1,7 @@
 ---
 # defaults file for hmpps-cr-ancillary-jira-ansible
+region: "eu-west-2"
+
 jira_group: jira
 jira_user: jira
 jira_gid: 2001

@@ -10,3 +10,8 @@
   service:
     name: awslogsd
     state: restarted
+
+#- name: ecs-stopped
+#  service:
+#    name: ecs
+#    state: stopped
