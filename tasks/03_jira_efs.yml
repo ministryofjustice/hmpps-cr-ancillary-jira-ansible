@@ -1,3 +1,6 @@
+---
+# 03_jira_efs.yml
+
 - name: Create JIRA Home directory
   become: yes
   file:
@@ -13,7 +16,7 @@
     owner: "{{ jira_user }}"
     group: "{{ jira_group }}"
     mode: 0755
-    #recurse: yes
+#    recurse: yes
 
 - name: Mount JIRA Home Dir on EFS Volume
   become: yes
@@ -23,6 +26,29 @@
     fstype: efs
     opts: tls
     state: mounted
+  register: efs_mounted
+
+- name: output debug
+  debug: var=efs_mounted
+
+- name: Create JIRA Shared Home directory
+  block:
+    - name: Create JIRA Shared Home directory
+      become: yes
+      file:
+        path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+        state: directory
+        owner: "{{ jira_user }}"
+        group: "{{ jira_group }}"
+
+    - name: Update JIRA Shared Home directory permissions
+      become: yes
+      file:
+        path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+        owner: "{{ jira_user }}"
+        group: "{{ jira_group }}"
+        mode: 0755
+  when: not efs_mounted.failed
 
 # Check EFS for AWS Backup directory
 # Moves files into place

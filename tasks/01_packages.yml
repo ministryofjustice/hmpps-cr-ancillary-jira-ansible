@@ -1,4 +1,6 @@
 ---
+# 01_packages.yml
+
 - name: Install required packages
   become: yes
   yum:
@@ -13,3 +15,9 @@
     - awslogs
     - gcc
     - postgresql
+    - python2-pip
+    - python-psycopg2
+
+- name: Install python packages
+  pip:
+    name: docker-py

@@ -1,0 +1,25 @@
+---
+services:
+  jira:
+    ports:
+      - 8080:8080
+    container_name: jira
+    image: "{{ jira_docker_hub_image }}:{{ jira_docker_hub_image_version }}"
+    restart: always
+    environment:
+      CLUSTERED: "false"
+      ATL_JDBC_URL: "{{ jira_db_host }}"
+      ATL_JDBC_USER: "jira"
+      ATL_DB_DRIVER: "org.postgresql.Driver"
+      ATL_DB_TYPE: "postgresaurora96"
+      ATL_DB_SCHEMA_NAME: "public"
+      ATL_JDBC_PASSWORD: "{{ jira_db_user_password }}"
+      ATL_PROXY_NAME: "{{ alb_fqdn }}"
+      ATL_PROXY_PORT: "443"
+      ATL_TOMCAT_SCHEME: "https"
+      ATL_TOMCAT_SECURE: "true"
+      JVM_MINIMUM_MEMORY: "1536m"
+      JVM_MAXIMUM_MEMORY: "3072m"
+      JVM_RESERVED_CODE_CACHE_SIZE: "1024m"
+    volumes:
+      - {{ jira_home }}{{ shared_home_volume_root_dir}}:{{ sharedhome_path }}

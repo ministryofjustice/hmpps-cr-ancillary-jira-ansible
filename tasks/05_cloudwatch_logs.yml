@@ -1,0 +1,60 @@
+---
+- name: Update CWLogs Region
+  replace:
+    path: /etc/awslogs/awscli.conf
+    regexp: "us-east-1"
+    replace: "{{ region }}"
+
+- name: Update CWLogs Log Group Target
+  replace:
+    path: /etc/awslogs/awslogs.conf
+    regexp: "log_group_name.=.*"
+    replace: "log_group_name = {{ cwlogs_log_group }}"
+
+- name: Update CWLogs Log Stream Name
+  replace:
+    path: /etc/awslogs/awslogs.conf
+    regexp: "log_stream_name.=.*"
+    replace: "log_stream_name = {{ instance_id }}/system-log"
+
+- name: Add JIRA Log Files
+  blockinfile:
+    path: /etc/awslogs/awslogs.conf
+    block: |
+      [JIRA Server Log]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/atlassian-jira.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+      [JIRA Server PERF]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/atlassian-jira-perf.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+      [JIRA Server Security]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/atlassian-jira-security.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+      [JIRA Server Slow-Queries]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/atlassian-jira-slow-queries.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+      [JIRA Server Servicedesk]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/atlassian-servicedesk.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+      [JIRA Server Diagnostics]
+      datetime_format = %b %d %H:%M:%S
+      file = {{ jira_home }}{{ shared_home_volume_root_dir}}/log/jira-diagnostics.log
+      log_stream_name = {{ instance_id }}/atlassian-jira-log
+      initial_position = start_of_file
+      log_group_name = {{ cwlogs_log_group }}
+  notify: awslogs-restart

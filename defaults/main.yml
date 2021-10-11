@@ -1,14 +1,27 @@
 ---
 # defaults file for hmpps-cr-ancillary-jira-ansible
+region: "eu-west-2"
 
----
-# defaults file for jira-install
 jira_group: jira
 jira_user: jira
 jira_gid: 2001
 jira_uid: 2001
 jira_artefact_bucket: "tf-eu-west-2-hmpps-eng-dev-artefacts-s3bucket"
 jira_user_home_dir: "/home/jira"
+
+sharedhome_path: "/var/atlassian/application-data/jira"
+shared_home_volume_name: "jira_shared_home"
+shared_home_volume_root_dir: "/jira_shared_home"
+jira_config_path: "/opt/atlassian/jira/conf"
+jira_config_volume_name: "jira_config"
+jira_config_volume_root_dir: "/jira_config"
+
+cwlogs_log_group: "jira-service-management-cwl"
+
 jira_home: "/var/jira"
 jira_db_name: "jira"
 jira_db_grants: "SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX"
+jira_db_user: jira
+
+jira_docker_hub_image: "atlassian/jira-servicemanagement"
+jira_docker_hub_image_version: "4.17.0"

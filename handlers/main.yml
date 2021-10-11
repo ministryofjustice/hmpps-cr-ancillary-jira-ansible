@@ -1,2 +1,17 @@
 ---
 # handlers file for hmpps-cr-ancillary-jira-ansible
+
+#- name: jira-restart
+#  service:
+#    name: jira
+#    state: restarted
+
+- name: awslogs-restart
+  service:
+    name: awslogsd
+    state: restarted
+
+#- name: ecs-stopped
+#  service:
+#    name: ecs
+#    state: stopped

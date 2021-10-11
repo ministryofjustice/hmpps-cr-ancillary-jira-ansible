@@ -1,0 +1,48 @@
+---
+# 04_jira_db.yml
+
+- name: Create JIRA DB
+  postgresql_db:
+    login_host: "{{ jira_db_host }}"
+    login_user: "{{ jira_db_master_username }}"
+    login_password: "{{ jira_db_master_password }}"
+    state: present
+    name: "{{ jira_db_name }}"
+  become: yes
+  become_user: "{{ jira_db_master_username }}"
+
+- name: Create PostgreSQL JIRA User
+  postgresql_user:
+    login_host: "{{ jira_db_host }}"
+    login_user: "{{ jira_db_master_username }}"
+    login_password: "{{ jira_db_master_password }}"
+    state: present
+    db: "{{ jira_db_name }}"
+    name: "{{ jira_db_user }}"
+    password: "{{ jira_db_user_password }}"
+  become: yes
+  become_user: "{{ jira_db_master_username }}"
+
+- name: Grant JIRA User access to JIRA DB
+  postgresql_privs:
+    login_host: "{{ jira_db_host }}"
+    login_user: "{{ jira_db_master_username }}"
+    login_password: "{{ jira_db_master_password }}"
+    type: database
+    database: "{{ jira_db_name }}"
+    roles: "{{ jira_db_user }}"
+    grant_option: no
+    privs: all
+  become: yes
+  become_user: "{{ jira_db_master_username }}"
+
+- name: Allow md5 connection for the JIRA User
+  postgresql_pg_hba:
+    dest: "{{ jira_user_home_dir }}/pg_hba.conf"
+    contype: host
+    databases: all
+    method: md5
+    users: "{{ jira_db_user }}"
+    create: true
+  become: yes
+  become_user: "{{ jira_db_master_username }}"
