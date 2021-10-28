@@ -36,7 +36,7 @@
     - name: Create JIRA Shared Home directory
       become: yes
       file:
-        path: "{{ efs_jira_base_dir }}/{{ src_shared_home}}"
+        path: "{{ src_shared_home }}"
         state: directory
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
@@ -44,7 +44,7 @@
     - name: Update JIRA Shared Home directory permissions
       become: yes
       file:
-        path: "{{ efs_jira_base_dir }}/{{ src_shared_home}}"
+        path: "{{ src_shared_home }}"
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
         mode: 0755
