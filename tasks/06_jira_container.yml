@@ -39,6 +39,6 @@
       JVM_RESERVED_CODE_CACHE_SIZE: "1024m"
       JIRA_HOME: "{{ container_jira_home }}"
       JIRA_SHARED_HOME: "{{ container_jira_shared_home }}"
-      volumes:
-        - "{{ src_jira_home }}:{{ container_jira_home }}"
-        - "{{ src_shared_home }}:{{ container_jira_shared_home }}"
+    volumes:
+      - "{{ src_jira_home }}:{{ container_jira_home }}"
+      - "{{ src_shared_home }}:{{ container_jira_shared_home }}"
