@@ -33,27 +33,23 @@
 
 - name: Create JIRA Shared Home directory
   block:
-    - name: Create JIRA Shared Home directory
+    - name: Create JIRA Home and Shared directories
       become: yes
       file:
         path: "{{ item }}"
         state: directory
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
-      loop:
-        - "{{ src_jira_home }}"
-        - "{{ src_shared_home }}"
+      loop: "{{ efs_directories }}"
 
-    - name: Update JIRA Shared Home directory permissions
+    - name: Update JIRA Home and Shared directory permissions
       become: yes
       file:
         path: "{{ item }}"
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
         mode: 0755
-      loop:
-        - "{{ src_jira_home }}"
-        - "{{ src_shared_home }}"
+      loop: "{{ efs_directories }}"
   when: not efs_mounted.failed
 
 # Check EFS for AWS Backup directory

@@ -20,6 +20,11 @@ src_jira_home_node2: "{{ efs_jira_base_dir }}/jira_home_node2"
 src_jira_home_node3: "{{ efs_jira_base_dir }}/jira_home_node3"
 
 src_shared_home: "{{ efs_jira_base_dir }}/jira_shared_home"
+efs_directories:
+  - "{{ src_jira_home }}"
+  - "{{ src_jira_home_node1 }}"
+  - "{{ src_jira_home_node2 }}"
+  - "{{ src_jira_home_node3 }}"
 
 # Container
 container_jira_home: "/var/atlassian/application-data/jira"
