@@ -9,16 +9,25 @@ jira_uid: 2001
 jira_artefact_bucket: "tf-eu-west-2-hmpps-eng-dev-artefacts-s3bucket"
 jira_user_home_dir: "/home/jira"
 
-sharedhome_path: "/var/atlassian/application-data/jira"
-shared_home_volume_name: "jira_shared_home"
-shared_home_volume_root_dir: "/jira_shared_home"
-jira_config_path: "/opt/atlassian/jira/conf"
-jira_config_volume_name: "jira_config"
-jira_config_volume_root_dir: "/jira_config"
+
+# EFS
+
+efs_jira_base_dir: "/var/jira"
+
+src_jira_home: "{{ efs_jira_base_dir }}/jira_home"
+src_jira_home_node1: "{{ efs_jira_base_dir }}/jira_home_node1"
+src_jira_home_node2: "{{ efs_jira_base_dir }}/jira_home_node2"
+src_jira_home_node3: "{{ efs_jira_base_dir }}/jira_home_node3"
+
+src_shared_home: "{{ efs_jira_base_dir }}/jira_shared_home"
+
+# Container
+container_jira_home: "/var/atlassian/application-data/jira"
+container_jira_shared_home: "/var/atlassian/application-data/shared"
 
 cwlogs_log_group: "jira-service-management-cwl"
 
-jira_home: "/var/jira"
+
 jira_db_name: "jira"
 jira_db_grants: "SELECT,INSERT,UPDATE,DELETE,CREATE,DROP,ALTER,INDEX"
 jira_db_user: jira

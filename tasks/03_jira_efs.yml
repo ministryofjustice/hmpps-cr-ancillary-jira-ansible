@@ -1,10 +1,10 @@
 ---
 # 03_jira_efs.yml
 
-- name: Create JIRA Home directory
+- name: Create JIRA directory
   become: yes
   file:
-    path: "{{ jira_home }}"
+    path: "{{ efs_jira_base_dir }}"
     state: directory
     owner: "{{ jira_user }}"
     group: "{{ jira_group }}"
@@ -12,7 +12,7 @@
 - name: Update JIRA Home directory permissions
   become: yes
   file:
-    path: "{{ jira_home }}"
+    path: "{{ efs_jira_base_dir }}"
     owner: "{{ jira_user }}"
     group: "{{ jira_group }}"
     mode: 0755
@@ -21,7 +21,7 @@
 - name: Mount JIRA Home Dir on EFS Volume
   become: yes
   mount:
-    path: "{{ jira_home }}"
+    path: "{{ efs_jira_base_dir }}"
     src: "{{ jira_data_volume_id }}"
     fstype: efs
     opts: tls
@@ -36,7 +36,7 @@
     - name: Create JIRA Shared Home directory
       become: yes
       file:
-        path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+        path: "{{ efs_jira_base_dir }}/{{ src_shared_home}}"
         state: directory
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
@@ -44,7 +44,7 @@
     - name: Update JIRA Shared Home directory permissions
       become: yes
       file:
-        path: "{{ jira_home }}{{ shared_home_volume_root_dir}}"
+        path: "{{ efs_jira_base_dir }}/{{ src_shared_home}}"
         owner: "{{ jira_user }}"
         group: "{{ jira_group }}"
         mode: 0755

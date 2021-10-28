@@ -5,15 +5,6 @@
     name: ecs
     state: stopped
 
-- name: Create jira-config.properties file
-  template:
-    src: "jira-config.properties.j2"
-    dest: "{{ jira_home }}{{ shared_home_volume_root_dir}}/jira-config.properties"
-    owner: "{{ jira_user }}"
-    group: "{{ jira_group }}"
-    mode: 0644
-
-
 ## For quick testing and restarting
 - name: Create Docker-compose file
   template:
@@ -32,8 +23,8 @@
     ports:
       - 8080:8080
     env:
-      CLUSTERED: "false"
-      ATL_JDBC_URL: "{{ jira_db_host }}"
+      CLUSTERED: "true"
+      ATL_JDBC_URL: "jdbc:postgresql://{{ jira_db_host }}:5432/jira?targetServerType=master"
       ATL_JDBC_USER: "jira"
       ATL_DB_DRIVER: "org.postgresql.Driver"
       ATL_DB_TYPE: "postgresaurora96"
@@ -46,8 +37,12 @@
       JVM_MINIMUM_MEMORY: "1536m"
       JVM_MAXIMUM_MEMORY: "3072m"
       JVM_RESERVED_CODE_CACHE_SIZE: "1024m"
+      JIRA_HOME: "/var/atlassian/application-data/jira"
+      JIRA_SHARED_HOME: "/var/atlassian/application-data/shared"
     volumes:
-      - "{{ jira_home }}{{ shared_home_volume_root_dir }}:{{ sharedhome_path }}"
+      - "{{ efs_jira_base_dir }}/{{ src_shared_home }}:{{ container_jira_shared_home }}"
+      - /var/jira/jira_home_node1:/var/atlassian/application-data/jira
+      - /var/jira/jira_shared_home/shared:/var/atlassian/application-data/shared
 
 #- name: Update dbconfig.xml file
 #  template:
