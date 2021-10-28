@@ -17,7 +17,7 @@
 - name: Start Jira Service Management container
   docker_container:
     name: jira
-    image: atlassian/jira-servicemanagement
+    image: "{{ jira_docker_hub_image }}:{{ jira_docker_hub_image_version }}"
     state: started
     restart: yes
     ports:
